@@ -1,0 +1,29 @@
+{
+  "name": "triton-client",
+  "version": "1.0.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "types/index.d.ts",
+  "repository": "https://github.com/cnwangjie/triton-client-js.git",
+  "author": "Wang Jie <i@i8e.net>",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:esm": "tsc -p . -m ESNext --outDir dist/esm",
+    "build:cjs": "tsc -p . -m commonjs --outDir dist/cjs",
+    "test": "vitest",
+    "prepublishOnly": "yarn build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.8.3",
+    "@types/node": "^20.14.10",
+    "typescript": "^5.5.3",
+    "vitest": "^2.0.2"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.11.1",
+    "google-protobuf": "^3.21.4",
+    "promisify-grpc-client": "^3.0.1"
+  }
+}
