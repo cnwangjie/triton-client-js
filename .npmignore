@@ -1,6 +1,6 @@
 *
 !dist/**/*.js*
-!types/**/*
+!dist/**/*.d.ts
 !src/**/*
 !package.json
 !LICENSE

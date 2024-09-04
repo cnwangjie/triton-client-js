@@ -1,16 +1,14 @@
 {
   "name": "triton-client",
-  "version": "1.0.0",
+  "version": "1.1.2-alpha.2",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "types": "types/index.d.ts",
+  "types": "dist/cjs/index.d.ts",
   "repository": "https://github.com/cnwangjie/triton-client-js.git",
   "author": "Wang Jie <i@i8e.net>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn build:cjs && yarn build:esm",
-    "build:esm": "tsc -p . -m ESNext --outDir dist/esm",
-    "build:cjs": "tsc -p . -m commonjs --outDir dist/cjs",
+    "build": "bash ./scripts/build.sh",
     "test": "vitest",
     "prepublishOnly": "yarn build"
   },
@@ -24,6 +22,6 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.11.1",
     "google-protobuf": "^3.21.4",
-    "promisify-grpc-client": "^3.0.1"
+    "promisify-grpc-client": "^4.0.0-alpha.1"
   }
 }

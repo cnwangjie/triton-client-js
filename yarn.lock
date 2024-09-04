@@ -715,10 +715,10 @@ postcss@^8.4.39:
     picocolors "^1.0.1"
     source-map-js "^1.2.0"
 
-promisify-grpc-client@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/promisify-grpc-client/-/promisify-grpc-client-3.0.1.tgz#5c797831400512e1e0743248ad8b56aed2436103"
-  integrity sha512-cbfMVcCcxWC+6twgG0bwhdLObDwQ3FiIOCKnkKIJ91weaSBDlwGLItMU/XpB3L8SvyGtS4nrcegomzeCckGVfQ==
+promisify-grpc-client@^4.0.0-alpha.1:
+  version "4.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/promisify-grpc-client/-/promisify-grpc-client-4.0.0-alpha.1.tgz#ed82ce55f60743a55791a4aacd7c4f22e93f759e"
+  integrity sha512-E935QxkqxXi6MCn1v4JlOJ9hrAefiiJ7Qs7NwfI+owQ74UtKXwN6BNOJXLU9Vm1M5meke0Ue6S0xxBVORtuANg==
 
 protobufjs@^7.2.5:
   version "7.4.0"

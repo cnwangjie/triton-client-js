@@ -35,10 +35,10 @@ export class TritonGrpcClient {
     (res: ModelStreamInferResponse.AsObject) => void
   >()
 
+  protected streamErrorCallbacks = new Set<(err: Error) => void>()
+
   startStream() {
-    if (this.stream) {
-      throw new Error('Stream already started')
-    }
+    if (this.stream) return this.stream
 
     const stream = this.client.modelStreamInfer({})
 
@@ -53,18 +53,26 @@ export class TritonGrpcClient {
         callback(res)
       }
     })
+
+    stream.on('error', err => {
+      for (const callback of this.streamErrorCallbacks) {
+        callback(err)
+      }
+      this.stopStream()
+    })
+
+    return stream
   }
 
   stopStream() {
     this.stream?.end()
     this.stream = undefined
     this.streamCallbacks.clear()
+    this.streamErrorCallbacks.clear()
   }
 
   async asyncStreamInfer(req: ModelInferRequest) {
-    if (!this.stream) {
-      throw new Error('Stream not started')
-    }
+    const stream = this.stream || this.startStream()
 
     if (!req.getId()) {
       req.setId(Math.random().toString(36).substring(2))
@@ -72,14 +80,22 @@ export class TritonGrpcClient {
 
     const id = req.getId()
 
-    const promise = new Promise<ModelStreamInferResponse.AsObject>(resolve => {
-      this.streamCallbacks.set(id, res => {
-        this.streamCallbacks.delete(id)
-        resolve(res)
-      })
-    })
+    const promise = new Promise<ModelStreamInferResponse.AsObject>(
+      (resolve, reject) => {
+        const errorCallback = (err: unknown) => {
+          reject(err)
+          this.streamCallbacks.delete(id)
+        }
+        this.streamCallbacks.set(id, res => {
+          this.streamCallbacks.delete(id)
+          resolve(res)
+          this.streamErrorCallbacks.delete(errorCallback)
+        })
+        this.streamErrorCallbacks.add(errorCallback)
+      },
+    )
 
-    this.stream.write(req)
+    stream.write(req)
 
     return promise
   }
